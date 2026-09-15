@@ -39,9 +39,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const _Masthead(),
-                  const SizedBox(height: 44),
+                  const SizedBox(height: 34),
                   const _Hero(),
-                  const SizedBox(height: 36),
+                  const SizedBox(height: 28),
                   FutureBuilder<Leaderboard>(
                     future: _leaderboard,
                     builder: (context, snapshot) {
@@ -79,7 +79,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _Stats(board: board),
-                          const SizedBox(height: 38),
+                          const SizedBox(height: 40),
                           _TableHeading(latestMeeting: board.latestMeeting),
                           const SizedBox(height: 18),
                           if (board.entries.isEmpty)
@@ -98,7 +98,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       );
                     },
                   ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 24),
                   const Wrap(
                     spacing: 8,
                     runSpacing: 8,
@@ -115,7 +115,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 56),
+                  const SizedBox(height: 48),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     decoration: const BoxDecoration(
@@ -129,9 +129,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                         Text(
                           'INNOFORMULA CLUB',
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
+                            fontFamily: 'RussoOne',
                             fontSize: 11,
-                            letterSpacing: 1.8,
+                            letterSpacing: 1.3,
                           ),
                         ),
                         Text(
@@ -156,45 +156,48 @@ class _Masthead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(vertical: 28),
+    padding: const EdgeInsets.symmetric(vertical: 20),
     decoration: const BoxDecoration(
       border: Border(bottom: BorderSide(color: divider)),
     ),
     child: Row(
       children: [
-        Container(
-          width: 38,
-          height: 32,
-          decoration: BoxDecoration(
-            color: accent,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          alignment: Alignment.center,
-          child: const Text(
-            'IF',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
+        Image.asset(
+          'assets/branding/club-mark.png',
+          width: 88,
+          height: 59,
+          fit: BoxFit.contain,
+          semanticLabel: 'Логотип InnoFormula — три болида',
         ),
-        const SizedBox(width: 12),
-        const Flexible(
+        const SizedBox(width: 14),
+        const Expanded(
           child: Text(
             'INNOFORMULA',
             style: TextStyle(
+              fontFamily: 'RussoOne',
               fontSize: 18,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1.1,
+              letterSpacing: 0.3,
             ),
           ),
         ),
-        if (MediaQuery.sizeOf(context).width >= 600) ...[
-          const Spacer(),
-          const Text(
-            'КЛУБ  /  ТАБЛИЦА ПОСЕЩАЕМОСТИ',
-            style: TextStyle(color: muted, fontSize: 10, letterSpacing: 1.6),
+        if (MediaQuery.sizeOf(context).width >= 780) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+            decoration: BoxDecoration(
+              border: Border.all(color: divider),
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(14),
+              ),
+            ),
+            child: const Text(
+              'ВСТРЕЧИ. ЛЮДИ. ФОРМУЛА.',
+              style: TextStyle(
+                color: muted,
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1,
+              ),
+            ),
           ),
         ],
       ],
@@ -209,112 +212,126 @@ class _Hero extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       final wide = constraints.maxWidth > 680;
-      return Stack(
-        children: [
-          if (wide)
-            const Positioned(
-              right: 0,
+      return Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: const Color(0xFF181822),
+          border: Border.all(color: divider),
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(44),
+            bottomLeft: Radius.circular(6),
+          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              right: wide ? -35 : -150,
               top: 0,
               bottom: 0,
-              width: 290,
+              width: 410,
               child: ExcludeSemantics(
-                child: CustomPaint(painter: _TrackPainter()),
+                child: CustomPaint(
+                  painter: _TrackPainter(opacity: wide ? 1 : 0.35),
+                ),
               ),
             ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Row(
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 3,
+              child: ColoredBox(color: accent),
+            ),
+            Padding(
+              padding: EdgeInsets.all(wide ? 36 : 22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 22,
-                    child: Divider(color: accent, thickness: 3),
-                  ),
-                  SizedBox(width: 10),
-                  Flexible(
-                    child: Text(
-                      'КАЖДАЯ ВСТРЕЧА СЧИТАЕТСЯ',
-                      style: TextStyle(
-                        color: accent,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1.7,
+                  Row(
+                    children: [
+                      Container(width: 7, height: 7, color: accent),
+                      const SizedBox(width: 9),
+                      const Flexible(
+                        child: Text(
+                          'КАЖДАЯ ВСТРЕЧА СЧИТАЕТСЯ',
+                          style: TextStyle(
+                            color: muted,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.6,
+                          ),
+                        ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 28),
+                  Text(
+                    'КАЖДАЯ ВСТРЕЧА',
+                    style: displayStyle.copyWith(
+                      fontSize: wide ? 43 : 27,
+                      height: 1.12,
+                      letterSpacing: -0.5,
                     ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    'В ЗАЧЁТ.',
+                    style: displayStyle.copyWith(
+                      fontSize: wide ? 64 : 44,
+                      color: accent,
+                      height: 1.15,
+                      letterSpacing: -0.8,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Посещаемость за всё время',
+                    style: TextStyle(fontSize: 15, color: muted),
                   ),
                 ],
               ),
-              const SizedBox(height: 22),
-              Text(
-                'Встречаемся.\nПоднимаемся выше.',
-                style: TextStyle(
-                  fontSize: wide ? 52 : 34,
-                  height: 1.08,
-                  letterSpacing: -1.5,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 22),
-              const Text(
-                'Посещаемость за всё время',
-                style: TextStyle(fontSize: 16, color: muted),
-              ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       );
     },
   );
 }
 
+/// An evolution of the site's track decoration: repeated racing-line geometry.
 class _TrackPainter extends CustomPainter {
-  const _TrackPainter();
+  const _TrackPainter({required this.opacity});
+  final double opacity;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final path = Path()
-      ..moveTo(size.width, 20)
-      ..lineTo(112, 20)
-      ..quadraticBezierTo(65, 20, 65, 67)
-      ..lineTo(65, 95)
-      ..quadraticBezierTo(65, 132, 105, 132)
-      ..lineTo(190, 132)
-      ..quadraticBezierTo(224, 132, 224, 163)
-      ..quadraticBezierTo(224, 195, 190, 195)
-      ..lineTo(0, 195);
-    canvas.drawPath(
-      path,
-      Paint()
-        ..color = divider
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 36,
-    );
-    canvas.drawPath(
-      path,
-      Paint()
-        ..color = background
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 32,
-    );
-    canvas.drawPath(
-      path,
-      Paint()
-        ..color = const Color(0xFF232429)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1,
-    );
-    canvas.drawLine(
-      const Offset(20, 180),
-      const Offset(20, 210),
-      Paint()
-        ..color = accent
-        ..strokeWidth = 4,
-    );
-    canvas.drawCircle(const Offset(150, 20), 5, Paint()..color = accent);
+    for (var i = 0; i < 7; i++) {
+      final offset = i * 13.0;
+      final path = Path()
+        ..moveTo(size.width + 30, size.height * 0.13 + offset)
+        ..lineTo(size.width * 0.68 + offset, size.height * 0.13 + offset)
+        ..quadraticBezierTo(
+          size.width * 0.60 + offset,
+          size.height * 0.13 + offset,
+          size.width * 0.55 + offset,
+          size.height * 0.23 + offset,
+        )
+        ..lineTo(size.width * 0.10 + offset, size.height + 20);
+      canvas.drawPath(
+        path,
+        Paint()
+          ..color = (i < 3 ? accent : racingPurple).withValues(
+            alpha: (0.28 - i * 0.02) * opacity,
+          )
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 5,
+      );
+    }
   }
 
   @override
-  bool shouldRepaint(_TrackPainter oldDelegate) => false;
+  bool shouldRepaint(_TrackPainter oldDelegate) =>
+      opacity != oldDelegate.opacity;
 }
 
 String _date(DateTime date) =>
@@ -329,7 +346,10 @@ class _Stats extends StatelessWidget {
     decoration: BoxDecoration(
       color: panel,
       border: Border.all(color: divider),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(22),
+        bottomLeft: Radius.circular(6),
+      ),
     ),
     child: IntrinsicHeight(
       child: Row(
@@ -339,6 +359,7 @@ class _Stats extends StatelessWidget {
               value: '${board.meetings.length}',
               label: 'Проведено встреч',
               index: '01',
+              color: accent,
             ),
           ),
           const VerticalDivider(width: 1, color: divider),
@@ -347,6 +368,7 @@ class _Stats extends StatelessWidget {
               value: '${board.entries.length}',
               label: 'Участников клуба',
               index: '02',
+              color: electricBlue,
             ),
           ),
         ],
@@ -356,10 +378,16 @@ class _Stats extends StatelessWidget {
 }
 
 class _Stat extends StatelessWidget {
-  const _Stat({required this.value, required this.label, required this.index});
+  const _Stat({
+    required this.value,
+    required this.label,
+    required this.index,
+    required this.color,
+  });
   final String value;
   final String label;
   final String index;
+  final Color color;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -373,11 +401,10 @@ class _Stat extends StatelessWidget {
             Expanded(
               child: Text(
                 value,
-                style: const TextStyle(
+                style: displayStyle.copyWith(
                   fontSize: 40,
                   height: 1.1,
-                  fontWeight: FontWeight.w700,
-                  fontFeatures: [FontFeature.tabularFigures()],
+                  fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),
             ),
@@ -391,8 +418,20 @@ class _Stat extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        Text(label, style: const TextStyle(color: muted, fontSize: 12)),
+        const SizedBox(height: 13),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(width: 3, height: 14, color: color),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(color: muted, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
       ],
     ),
   );
@@ -409,13 +448,16 @@ class _TableHeading extends StatelessWidget {
     spacing: 16,
     runSpacing: 12,
     children: [
-      const Text(
-        'ОБЩИЙ ЗАЧЁТ',
-        style: TextStyle(
-          fontSize: 15,
-          letterSpacing: 1.3,
-          fontWeight: FontWeight.w700,
-        ),
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(width: 4, height: 21, color: accent),
+          const SizedBox(width: 10),
+          Text(
+            'ОБЩИЙ ЗАЧЁТ',
+            style: displayStyle.copyWith(fontSize: 18, letterSpacing: 0.4),
+          ),
+        ],
       ),
       Text(
         latestMeeting == null
@@ -440,13 +482,19 @@ class _TimingTable extends StatelessWidget {
       return Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(24),
+            bottomLeft: Radius.circular(6),
+          ),
           border: Border.all(color: divider),
         ),
         child: Column(
           children: [
             Container(
-              color: const Color(0xFF202126),
+              decoration: const BoxDecoration(
+                color: Color(0xFF252532),
+                border: Border(top: BorderSide(color: accent, width: 3)),
+              ),
               padding: EdgeInsets.symmetric(
                 horizontal: compact ? 12 : 26,
                 vertical: 16,
@@ -473,9 +521,9 @@ class _TimingTable extends StatelessWidget {
                 ),
               ),
             ),
-            for (final entry in board.entries)
+            for (var index = 0; index < board.entries.length; index++)
               _TimingRow(
-                entry: entry,
+                entry: board.entries[index],
                 positionWidth: positionWidth,
                 countWidth: countWidth,
                 compact: compact,
@@ -516,7 +564,13 @@ class _TimingRow extends StatelessWidget {
       excludeSemantics: true,
       child: Container(
         decoration: BoxDecoration(
-          color: entry.rank == 1 ? const Color(0xFF24221D) : panel,
+          gradient: entry.rank <= 3
+              ? LinearGradient(
+                  colors: [podiumColor.withValues(alpha: 0.06), panel],
+                  stops: const [0, 0.4],
+                )
+              : null,
+          color: entry.rank <= 3 ? null : panel,
           border: const Border(top: BorderSide(color: divider)),
         ),
         child: Stack(
@@ -524,15 +578,15 @@ class _TimingRow extends StatelessWidget {
             if (entry.rank <= 3)
               Positioned(
                 left: 0,
-                top: 0,
-                bottom: 0,
+                top: 18,
+                bottom: 18,
                 width: 3,
                 child: ColoredBox(color: podiumColor),
               ),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: compact ? 12 : 26,
-                vertical: 21,
+                vertical: 19,
               ),
               child: Row(
                 children: [
@@ -540,10 +594,9 @@ class _TimingRow extends StatelessWidget {
                     width: positionWidth,
                     child: Text(
                       entry.rank.toString().padLeft(2, '0'),
-                      style: TextStyle(
+                      style: displayStyle.copyWith(
                         color: podiumColor,
-                        fontSize: compact ? 23 : 30,
-                        fontWeight: FontWeight.w700,
+                        fontSize: compact ? 22 : 28,
                         fontStyle: FontStyle.italic,
                         fontFeatures: const [FontFeature.tabularFigures()],
                       ),
@@ -554,7 +607,7 @@ class _TimingRow extends StatelessWidget {
                       entry.participant.split('').join('\u200b'),
                       key: ValueKey('participant-${entry.participant}'),
                       style: TextStyle(
-                        fontSize: compact ? 14 : 17,
+                        fontSize: compact ? 14 : 16,
                         fontWeight: FontWeight.w600,
                         height: 1.5,
                       ),
@@ -568,19 +621,18 @@ class _TimingRow extends StatelessWidget {
                       children: [
                         Text(
                           '${entry.attendance}',
-                          style: const TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.w700,
-                            fontFeatures: [FontFeature.tabularFigures()],
+                          style: displayStyle.copyWith(
+                            fontSize: 25,
+                            fontFeatures: const [FontFeature.tabularFigures()],
                           ),
                         ),
                         const SizedBox(height: 8),
                         SizedBox(
-                          width: compact ? 40 : 68,
+                          width: compact ? 34 : 62,
                           child: LinearProgressIndicator(
                             value: entry.attendance / maximum,
                             minHeight: 2,
-                            color: entry.rank <= 3 ? podiumColor : accent,
+                            color: entry.rank <= 3 ? podiumColor : electricBlue,
                             backgroundColor: divider,
                           ),
                         ),
@@ -614,7 +666,10 @@ class _StatePanel extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 52),
     decoration: BoxDecoration(
       color: panel,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(24),
+        bottomLeft: Radius.circular(6),
+      ),
       border: Border.all(color: divider),
     ),
     child: Column(
@@ -624,11 +679,7 @@ class _StatePanel extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            height: 1.3,
-          ),
+          style: displayStyle.copyWith(fontSize: 20, height: 1.4),
         ),
         const SizedBox(height: 12),
         Text(

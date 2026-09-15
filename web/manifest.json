@@ -3,9 +3,9 @@
   "short_name": "InnoFormula",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#101113",
-  "theme_color": "#101113",
+  "background_color": "#14141e",
+  "theme_color": "#14141e",
   "description": "Общий лидерборд посещаемости клуба InnoFormula",
   "lang": "ru",
-  "icons": [{"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]
+  "icons": [{"src": "assets/assets/branding/club-mark.png", "sizes": "1536x1024", "type": "image/png", "purpose": "any"}]
 }

@@ -21,7 +21,12 @@ flutter:
   assets:
     - assets/attendance/
     - assets/fonts/OFL.txt
+    - assets/fonts/RussoOne-OFL.txt
+    - assets/branding/club-mark.png
   fonts:
+    - family: RussoOne
+      fonts:
+        - asset: assets/fonts/RussoOne-Regular.ttf
     - family: GolosText
       fonts:
         - asset: assets/fonts/GolosText.ttf

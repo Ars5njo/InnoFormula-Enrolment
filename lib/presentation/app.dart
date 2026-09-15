@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import '../domain/meeting_repository.dart';
 import 'leaderboard_screen.dart';
 
-const background = Color(0xFF101113);
-const panel = Color(0xFF191A1E);
-const muted = Color(0xFFACADB6);
-const accent = Color(0xFFFF3B30);
-const divider = Color(0xFF303137);
+const background = Color(0xFF14141E);
+const panel = Color(0xFF1D1D29);
+const muted = Color(0xFFADAEBF);
+const accent = Color(0xFFF63C30);
+const divider = Color(0xFF353543);
+const electricBlue = Color(0xFF4CAAE7);
+const racingPurple = Color(0xFF7843F2);
+
+const displayStyle = TextStyle(fontFamily: 'RussoOne');
 
 class InnoFormulaApp extends StatelessWidget {
   const InnoFormulaApp({super.key, required this.repository});
