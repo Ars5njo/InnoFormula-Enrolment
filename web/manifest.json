@@ -1,0 +1,11 @@
+{
+  "name": "InnoFormula — посещаемость клуба",
+  "short_name": "InnoFormula",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#101113",
+  "theme_color": "#101113",
+  "description": "Общий лидерборд посещаемости клуба InnoFormula",
+  "lang": "ru",
+  "icons": [{"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]
+}

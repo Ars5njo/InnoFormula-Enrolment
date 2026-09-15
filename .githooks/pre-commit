@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Reject partially staged attendance, so validation checks exactly what is committed.
+if ! git diff --quiet -- assets/attendance/; then
+  echo 'Сначала добавьте все изменения assets/attendance/ в индекс Git.' >&2
+  exit 1
+fi
+if command -v fvm >/dev/null 2>&1; then
+  fvm dart run tool/attendance.dart validate
+else
+  dart run tool/attendance.dart validate
+fi
