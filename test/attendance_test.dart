@@ -30,6 +30,21 @@ void main() {
     expect(Leaderboard(meetings).latestMeeting, DateTime.utc(2026, 9, 3));
   });
 
+  test(
+    'preserves multi-letter prefixes without merging distinct identifiers',
+    () {
+      expect(parseParticipants(' A.Ivanov\n AN.Ivanov\nan.ivanov '), {
+        'a.ivanov',
+        'an.ivanov',
+      });
+      final prepared = prepareEmails(
+        'a.ivanov@example.test\nAN.Ivanov@example.test',
+      );
+      expect(prepared.participants, ['a.ivanov', 'an.ivanov']);
+      expect(prepared.identities, hasLength(2));
+    },
+  );
+
   test('empty meetings and all ties are supported', () {
     expect(Leaderboard([]).entries, isEmpty);
     expect(Leaderboard([]).latestMeeting, isNull);
@@ -46,7 +61,9 @@ void main() {
 
   test('rejects invalid records without echoing raw input', () {
     for (final invalid in [
-      'full.name',
+      'fullname',
+      'a1.ivanov',
+      'a.n.ivanov',
       'a.ivanov@example.test',
       'a_ivanov',
       'a.ivanov extra',

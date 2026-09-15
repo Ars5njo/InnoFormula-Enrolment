@@ -1,7 +1,7 @@
 import '../domain/meeting.dart';
 
 const attendanceDirectory = 'assets/attendance/';
-final _identifierPattern = RegExp(r'^[a-z]\.[a-z]+(?:-[a-z]+)*$');
+final _identifierPattern = RegExp(r'^[a-z]+\.[a-z]+(?:-[a-z]+)*$');
 final _filenamePattern = RegExp(
   r'^(\d{4})-(\d{2})-(\d{2})-([a-zа-яё0-9]+(?:-[a-zа-яё0-9]+)*)\.txt$',
 );
